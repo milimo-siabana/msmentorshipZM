@@ -1813,94 +1813,15 @@
             });
         });
     </script>
-     <!-- ==================== -->
-<!-- AI CHAT BOX WIDGET  -->
-<!-- Links to actual content on MS Mentorship website -->
+    <!-- ==================== -->
+<!-- IMPROVED AI CHAT BOX WIDGET -->
 <!-- ==================== -->
 <style>
-    /* Chat Box Container - LEFT SIDE */
-    .ai-chat-container {
+    /* Chat Toggle Button - Looks like original AI button */
+    .ai-chat-toggle {
         position: fixed;
-        bottom: 20px;
-        left: 20px;
-        width: 380px;
-        max-width: 90vw;
-        height: 500px;
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 51, 102, 0.2);
-        z-index: 9998;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        font-family: 'Open Sans', sans-serif;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-        border: 1px solid var(--light-blue);
-    }
-    
-    .ai-chat-container.minimized {
-        height: 60px;
-        width: 60px;
-    }
-    
-    /* Chat Header - AI THEMED */
-    .chat-header {
-        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-        color: white;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-    }
-    
-    .chat-header h3 {
-        margin: 0;
-        font-size: 1.1rem;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .chat-header h3 i {
-        color: var(--accent-gold);
-        animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-    }
-    
-    .chat-controls {
-        display: flex;
-        gap: 10px;
-    }
-    
-    .chat-controls button {
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
-        color: white;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s;
-    }
-    
-    .chat-controls button:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: rotate(90deg);
-    }
-    
-    /* Chat Toggle Button */
-    .chat-toggle {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
+        bottom: 30px;
+        left: 30px;
         width: 60px;
         height: 60px;
         background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
@@ -1915,57 +1836,13 @@
         z-index: 9997;
         transition: all 0.3s ease;
         border: 3px solid white;
-    }
-    
-    .chat-toggle:hover {
-        transform: scale(1.15) rotate(10deg);
-        box-shadow: 0 6px 25px rgba(0, 51, 102, 0.6);
-    }
-    
-    .chat-toggle:hover::after {
-        content: 'MS Mentorship Assistant';
-        position: absolute;
-        top: -45px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-        color: white;
-        padding: 8px 15px;
-        border-radius: 25px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        white-space: nowrap;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        z-index: 10000;
-        animation: fadeInUp 0.3s ease;
-    }
-    
-    .chat-toggle:hover::before {
-        content: '';
-        position: absolute;
-        top: -12px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-width: 6px;
-        border-style: solid;
-        border-color: var(--primary-blue) transparent transparent transparent;
-        z-index: 10000;
-    }
-    
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translate(-50%, 10px);
-        }
-        to {
-            opacity: 1;
-            transform: translate(-50%, 0);
-        }
-    }
-    
-    /* AI Icon Animation */
-    .chat-toggle i {
         animation: float 3s ease-in-out infinite;
+    }
+    
+    .ai-chat-toggle:hover {
+        transform: scale(1.15);
+        box-shadow: 0 6px 25px rgba(0, 51, 102, 0.6);
+        animation: none;
     }
     
     @keyframes float {
@@ -1973,8 +1850,96 @@
         50% { transform: translateY(-5px); }
     }
     
+    /* Chat Box Container */
+    .ai-chat-container {
+        position: fixed;
+        bottom: 100px;
+        left: 30px;
+        width: 380px;
+        max-width: 90vw;
+        height: 500px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 51, 102, 0.2);
+        z-index: 9998;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        font-family: 'Open Sans', sans-serif;
+        transform: scale(0);
+        opacity: 0;
+        transform-origin: bottom left;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        border: 1px solid var(--light-blue);
+    }
+    
+    .ai-chat-container.active {
+        transform: scale(1);
+        opacity: 1;
+    }
+    
+    .ai-chat-container.minimized {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        bottom: 30px;
+        left: 30px;
+    }
+    
+    /* Chat Header */
+    .ai-chat-header {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .ai-chat-header h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .ai-chat-header h3 i {
+        color: var(--accent-gold);
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+    
+    .ai-chat-controls {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .ai-chat-controls button {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+    }
+    
+    .ai-chat-controls button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg);
+    }
+    
     /* Messages Area */
-    .chat-messages {
+    .ai-chat-messages {
         flex: 1;
         padding: 20px;
         overflow-y: auto;
@@ -1984,7 +1949,7 @@
         gap: 15px;
     }
     
-    .message {
+    .ai-message {
         max-width: 85%;
         padding: 12px 16px;
         border-radius: 18px;
@@ -2004,14 +1969,14 @@
         }
     }
     
-    .user-message {
+    .ai-user-message {
         align-self: flex-end;
         background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
         color: white;
         border-bottom-right-radius: 5px;
     }
     
-    .ai-message {
+    .ai-bot-message {
         align-self: flex-start;
         background: white;
         color: #333;
@@ -2020,7 +1985,7 @@
         position: relative;
     }
     
-    .ai-message::before {
+    .ai-bot-message::before {
         content: '🤖';
         position: absolute;
         left: -25px;
@@ -2029,16 +1994,8 @@
         font-size: 0.9rem;
     }
     
-    .ai-message strong {
-        color: var(--primary-blue);
-        background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    
-    /* Quick Actions */
-    .quick-actions {
+    /* Suggested Questions */
+    .ai-suggested-questions {
         padding: 15px 20px;
         background: white;
         border-top: 1px solid #e2e8f0;
@@ -2046,9 +2003,14 @@
         flex-wrap: wrap;
         gap: 10px;
         justify-content: center;
+        transition: all 0.3s ease;
     }
     
-    .quick-btn {
+    .ai-suggested-questions.hidden {
+        display: none;
+    }
+    
+    .ai-quick-btn {
         padding: 8px 15px;
         background: linear-gradient(135deg, rgba(0, 51, 102, 0.1) 0%, rgba(0, 34, 68, 0.1) 100%);
         color: var(--primary-blue);
@@ -2060,15 +2022,44 @@
         transition: all 0.3s;
     }
     
-    .quick-btn:hover {
+    .ai-quick-btn:hover {
         background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
         color: white;
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 51, 102, 0.2);
     }
     
+    /* Typing Indicator */
+    .ai-typing-indicator {
+        display: none;
+        padding: 12px 16px;
+        background: white;
+        border: 1px solid #e1e8ff;
+        border-radius: 18px;
+        border-bottom-left-radius: 5px;
+        align-self: flex-start;
+    }
+    
+    .ai-typing-indicator span {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+        border-radius: 50%;
+        margin: 0 3px;
+        animation: typing 1.4s infinite;
+    }
+    
+    .ai-typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .ai-typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    
+    @keyframes typing {
+        0%, 60%, 100% { transform: translateY(0); }
+        30% { transform: translateY(-8px); }
+    }
+    
     /* Input Area */
-    .chat-input-area {
+    .ai-chat-input-area {
         padding: 15px 20px;
         background: white;
         border-top: 1px solid #e2e8f0;
@@ -2077,7 +2068,7 @@
         align-items: center;
     }
     
-    .chat-input {
+    .ai-chat-input {
         flex: 1;
         padding: 12px 18px;
         border: 2px solid var(--light-blue);
@@ -2089,13 +2080,13 @@
         background: #f8fafc;
     }
     
-    .chat-input:focus {
+    .ai-chat-input:focus {
         border-color: var(--primary-blue);
         background: white;
         box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
     }
     
-    .send-btn {
+    .ai-send-btn {
         background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
         color: white;
         border: none;
@@ -2111,42 +2102,13 @@
         box-shadow: 0 4px 15px rgba(0, 51, 102, 0.3);
     }
     
-    .send-btn:hover {
-        transform: scale(1.1) rotate(15deg);
+    .ai-send-btn:hover {
+        transform: scale(1.1);
         box-shadow: 0 6px 20px rgba(0, 51, 102, 0.4);
     }
     
-    /* Typing Indicator */
-    .typing-indicator {
-        display: none;
-        padding: 12px 16px;
-        background: white;
-        border: 1px solid #e1e8ff;
-        border-radius: 18px;
-        border-bottom-left-radius: 5px;
-        align-self: flex-start;
-    }
-    
-    .typing-indicator span {
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
-        border-radius: 50%;
-        margin: 0 3px;
-        animation: typing 1.4s infinite;
-    }
-    
-    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-    
-    @keyframes typing {
-        0%, 60%, 100% { transform: translateY(0); }
-        30% { transform: translateY(-8px); }
-    }
-    
     /* Scholarship Highlight */
-    .scholarship-highlight {
+    .ai-scholarship-highlight {
         background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
         border-left: 4px solid var(--accent-gold);
         padding: 10px 15px;
@@ -2154,140 +2116,109 @@
         border-radius: 8px;
     }
     
+    /* Apology Message Style */
+    .ai-apology-message {
+        background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+        border-left: 4px solid #ff9800;
+        padding: 10px 15px;
+        margin: 8px 0;
+        border-radius: 8px;
+        color: #856404;
+    }
+    
     /* Responsive adjustments */
     @media (max-width: 768px) {
-        .ai-chat-container {
-            width: 95vw;
-            height: 70vh;
-            bottom: 10px;
-            left: 2.5vw;
-            right: auto;
-        }
-        
-        .chat-toggle {
-            bottom: 10px;
-            left: 10px;
-            right: auto;
+        .ai-chat-toggle {
+            bottom: 20px;
+            left: 20px;
             width: 55px;
             height: 55px;
             font-size: 1.6rem;
         }
         
-        .chat-toggle:hover::after {
-            font-size: 0.8rem;
-            padding: 6px 12px;
-            top: -40px;
+        .ai-chat-container {
+            width: 95vw;
+            height: 70vh;
+            bottom: 90px;
+            left: 2.5vw;
+            right: auto;
         }
         
-        .whatsapp-float {
-            bottom: 20px;
-            right: 20px;
-            width: 55px;
-            height: 55px;
-            font-size: 1.8rem;
-        }
-        
-        /* When chat is open on mobile, make WhatsApp smaller */
-        .ai-chat-container:not(.minimized) ~ .whatsapp-float {
-            transform: scale(0.9);
-            bottom: 15px;
-            right: 15px;
+        .ai-chat-container.active {
+            transform: scale(1) translateY(0);
         }
     }
     
     @media (max-width: 480px) {
-        .ai-chat-container {
-            width: 100vw;
-            height: 80vh;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            border-radius: 15px 15px 0 0;
-        }
-        
-        .chat-toggle {
-            bottom: 10px;
-            left: 10px;
+        .ai-chat-toggle {
+            bottom: 15px;
+            left: 15px;
             width: 50px;
             height: 50px;
             font-size: 1.5rem;
         }
         
-        .chat-toggle:hover::after {
-            font-size: 0.75rem;
-            padding: 5px 10px;
-            top: -35px;
-        }
-        
-        .whatsapp-float {
-            bottom: 15px;
-            right: 15px;
-            width: 50px;
-            height: 50px;
-            font-size: 1.6rem;
+        .ai-chat-container {
+            width: 100vw;
+            height: 80vh;
+            bottom: 80px;
+            left: 0;
+            right: 0;
+            border-radius: 15px 15px 0 0;
         }
     }
 </style>
 
 <!-- Chat Toggle Button -->
-<div class="chat-toggle" id="chatToggle">
-    <i class="fas fa-graduation-cap"></i>
-</div>
+<button class="ai-chat-toggle" id="aiChatToggle">
+    <i class="fas fa-robot"></i>
+</button>
 
 <!-- Chat Container -->
-<div class="ai-chat-container minimized" id="chatContainer">
+<div class="ai-chat-container" id="aiChatContainer">
     <!-- Chat Header -->
-    <div class="chat-header" id="chatHeader">
-        <h3><i class="fas fa-hands-helping"></i> MS Mentorship Assistant</h3>
-        <div class="chat-controls">
-            <button id="minimizeChat" title="Minimize"><i class="fas fa-minus"></i></button>
-            <button id="closeChat" title="Close"><i class="fas fa-times"></i></button>
+    <div class="ai-chat-header">
+        <h3><i class="fas fa-hands-helping"></i> MS Mentorship AI</h3>
+        <div class="ai-chat-controls">
+            <button id="aiMinimizeChat" title="Minimize"><i class="fas fa-minus"></i></button>
+            <button id="aiCloseChat" title="Close"><i class="fas fa-times"></i></button>
         </div>
     </div>
     
     <!-- Messages Area -->
-    <div class="chat-messages" id="chatMessages">
-        <!-- Initial welcome message -->
-        <div class="message ai-message">
-            <strong>Welcome to MS Mentorship! 🎓</strong><br><br>
-            I specialize in Zambian education opportunities including:<br>
-            • <a href="#scholarships" onclick="scrollToSection('#scholarships')">HELSB Bursaries & Scholarships</a><br>
-            • <a href="#find-course" onclick="scrollToSection('#find-course')">Zambian University Programs</a><br>
-            • International scholarships & applications<br>
-            • Free mentorship & guidance<br><br>
-            <small><i>💡 Ask me about HELSB, Zambian universities, or scholarships abroad!</i></small>
-        </div>
+    <div class="ai-chat-messages" id="aiChatMessages">
+        <!-- Initial message will be added by JavaScript -->
     </div>
     
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-        <button class="quick-btn" data-question="HELSB bursary information">
-            <i class="fas fa-money-bill-wave"></i> HELSB Info
+    <!-- Suggested Questions -->
+    <div class="ai-suggested-questions" id="aiSuggestedQuestions">
+        <button class="ai-quick-btn" data-question="How do I apply for HELSB?">
+            HELSB Application
         </button>
-        <button class="quick-btn" data-question="Scholarships for Zambia 2025">
-            <i class="fas fa-graduation-cap"></i> Zambia Scholarships
+        <button class="ai-quick-btn" data-question="Scholarships for Zambian students">
+            Zambian Scholarships
         </button>
-        <button class="quick-btn" data-question="Medicine programs in Zambia">
-            <i class="fas fa-stethoscope"></i> Medicine Programs
+        <button class="ai-quick-btn" data-question="University of Zambia programs">
+            UNZA Programs
         </button>
-        <button class="quick-btn" data-question="Online scholarships available">
-            <i class="fas fa-globe"></i> Online Scholarships
+        <button class="ai-quick-btn" data-question="Online scholarships 2025">
+            Online Scholarships
         </button>
     </div>
     
     <!-- Typing Indicator -->
-    <div class="typing-indicator" id="typingIndicator">
+    <div class="ai-typing-indicator" id="aiTypingIndicator">
         <span></span>
         <span></span>
         <span></span>
     </div>
     
     <!-- Input Area -->
-    <div class="chat-input-area">
-        <input type="text" class="chat-input" id="chatInput" 
-               placeholder="Ask about HELSB, scholarships, or universities..." 
+    <div class="ai-chat-input-area">
+        <input type="text" class="ai-chat-input" id="aiChatInput" 
+               placeholder="Ask about scholarships, universities, or applications..." 
                maxlength="500">
-        <button class="send-btn" id="sendBtn" title="Send Message">
+        <button class="ai-send-btn" id="aiSendBtn" title="Send Message">
             <i class="fas fa-paper-plane"></i>
         </button>
     </div>
@@ -2295,283 +2226,597 @@
 
 <script>
 // ==================== //
-// AI CHAT BOX LOGIC - UPDATED WITH HELSB & ONLINE SCHOLARSHIPS //
+// IMPROVED AI CHAT LOGIC //
 // ==================== //
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
-    const chatToggle = document.getElementById('chatToggle');
-    const chatContainer = document.getElementById('chatContainer');
-    const chatHeader = document.getElementById('chatHeader');
-    const minimizeBtn = document.getElementById('minimizeChat');
-    const closeBtn = document.getElementById('closeChat');
-    const chatMessages = document.getElementById('chatMessages');
-    const chatInput = document.getElementById('chatInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const typingIndicator = document.getElementById('typingIndicator');
-    const quickBtns = document.querySelectorAll('.quick-btn');
+    const aiChatToggle = document.getElementById('aiChatToggle');
+    const aiChatContainer = document.getElementById('aiChatContainer');
+    const aiMinimizeBtn = document.getElementById('aiMinimizeChat');
+    const aiCloseBtn = document.getElementById('aiCloseChat');
+    const aiChatMessages = document.getElementById('aiChatMessages');
+    const aiChatInput = document.getElementById('aiChatInput');
+    const aiSendBtn = document.getElementById('aiSendBtn');
+    const aiTypingIndicator = document.getElementById('aiTypingIndicator');
+    const aiSuggestedQuestions = document.getElementById('aiSuggestedQuestions');
+    const aiQuickBtns = document.querySelectorAll('.ai-quick-btn');
     
     // Chat state
-    let isMinimized = true;
-    let chatHistory = [];
+    let isChatOpen = false;
+    let isMinimized = false;
+    let conversationHistory = [];
+    let lastQuery = '';
     
-    // COMPREHENSIVE HELSB INFORMATION
-    const helsbInfo = {
-        name: "Higher Education Loans and Scholarships Board (HELSB)",
-        website: "https://www.helsb.gov.zm/",
-        email: "info@helsb.gov.zm",
-        phone: "+260 211 250 688",
-        whatIs: "HELSB is a Zambian government institution that provides loans and scholarships to students admitted to public and private higher education institutions.",
-        
-        bursaries2026: {
-            title: "HELSB 2026/27 Undergraduate Bursaries",
-            deadline: "Varies (Usually March-April 2025)",
-            eligibility: [
-                "Zambian citizens",
-                "Admitted to an accredited higher education institution in Zambia",
-                "Demonstrated financial need",
-                "Good academic performance"
-            ],
-            coverage: [
-                "Tuition fees",
-                "Accommodation allowances",
-                "Book allowances",
-                "Meal allowances"
-            ],
-            applicationProcess: [
-                "Check HELSB website for announcements",
-                "Complete online application form",
-                "Submit required documents (admission letter, NRC, academic transcripts)",
-                "Await selection results"
-            ]
-        },
-        
-        scholarshipsThroughHELSB: [
-            {
-                name: "Moroccan Government Scholarship",
-                deadline: "June 13, 2025 (approx)",
-                level: "Undergraduate",
-                applyThrough: "HELSB website when advertised"
-            },
-            {
-                name: "Chinese Government Scholarship (CSC) via HELSB",
-                deadline: "March-April annually",
-                level: "Undergraduate",
-                applyThrough: "HELSB website"
-            },
-            {
-                name: "Russian Government Scholarship via HELSB",
-                deadline: "November-December annually",
-                level: "Undergraduate",
-                applyThrough: "HELSB website"
-            },
-            {
-                name: "Egypt Government Scholarship via HELSB",
-                deadline: "Varies - check HELSB advert",
-                level: "Undergraduate",
-                applyThrough: "HELSB website"
-            },
-            {
-                name: "Commonwealth Scholarships via HELSB",
-                deadline: "Varies - check HELSB advert",
-                level: "Undergraduate/Masters",
-                applyThrough: "HELSB website"
-            }
-        ]
-    };
+    // Prevent auto-open on mobile
+    let hasOpenedOnce = localStorage.getItem('aiChatOpened') === 'true';
+    let isMobile = window.innerWidth <= 768;
     
-    // Data from YOUR website (extracted from your HTML)
-    const websiteScholarships = [
-        // HELSB and Government Scholarships
-        { title: "HELSB 2026/27 Undergraduate Bursaries", country: "Zambia", link: "https://www.helsb.gov.zm/", type: "government", status: "OPEN", deadline: "Varies" },
-        { title: "Moroccan Government Scholarship", country: "Morocco", link: "https://helsb.gov.zm", type: "government", status: "OPEN", deadline: "June 13, 2025" },
-        { title: "Chinese Government Scholarship (CSC) via HELSB", country: "China", link: "https://helsb.gov.zm", type: "government", status: "OPEN", deadline: "March-April 2025" },
-        { title: "Russian Government Scholarship via HELSB", country: "Russia", link: "https://helsb.gov.zm", type: "government", status: "OPEN", deadline: "Nov-Dec 2024" },
-        { title: "Egypt Government Scholarship via HELSB", country: "Egypt", link: "https://helsb.gov.zm", type: "government", status: "OPEN" },
-        { title: "Commonwealth Scholarships via HELSB", country: "UK", link: "https://helsb.gov.zm", type: "government", status: "OPEN" },
-        
-        // International Scholarships 
-        { title: "Chinese Government Scholarship (CSC)", country: "China", link: "http://www.csc.edu.cn/studyinchina", type: "full", status: "OPEN" },
-        { title: "Turkish Government Scholarships", country: "Turkey", link: "https://www.turkiyeburslari.gov.tr", type: "full", status: "SOON", deadline: "Feb 20, 2025" },
-        { title: "Mastercard Foundation Scholars Program", country: "multiple", link: "https://mastercardfdn.org/scholars", type: "full" },
-        { title: "DAAD Scholarships Germany", country: "Germany", link: "https://www.daad.de", type: "full" },
-        { title: "Japan Government (MEXT) Scholarships", country: "Japan", link: "https://www.studyinjapan.go.jp", type: "full" },
-        { title: "Korean Government Scholarship (KGSP)", country: "South Korea", link: "https://www.studyinkorea.go.kr", type: "full" },
-        { title: "Australian Awards Scholarships", country: "Australia", link: "https://www.dfat.gov.au/people-to-people/australia-awards", type: "full" },
-        { title: "Russian Government Scholarship (Open Doors)", country: "Russia", link: "https://od.globaluni.ru", type: "full" },
-        { title: "Commonwealth Scholarships", country: "UK", link: "https://cscuk.fcdo.gov.uk", type: "full", deadline: "Dec 18, 2024" },
-        
-        // Additional Online Scholarships (COMMONLY AVAILABLE)
-        { title: "Chevening Scholarships UK", country: "UK", link: "https://www.chevening.org/", type: "full", level: "Masters" },
-        { title: "Fulbright Foreign Student Program", country: "USA", link: "https://foreign.fulbrightonline.org/", type: "full", level: "Masters/PhD" },
-        { title: "Erasmus Mundus Scholarships", country: "EU", link: "https://www.eacea.ec.europa.eu/scholarships/erasmus-mundus_en", type: "full", level: "Masters" },
-        { title: "Swedish Institute Scholarships", country: "Sweden", link: "https://si.se/en/apply/scholarships/", type: "full", level: "Masters" },
-        { title: "Netherlands Government Scholarships", country: "Netherlands", link: "https://www.studyinnl.org/finances/orange-knowledge-programme", type: "partial", level: "Masters" },
-        { title: "University of Toronto Lester B. Pearson Scholarship", country: "Canada", link: "https://future.utoronto.ca/pearson/", type: "full", level: "Undergraduate" }
-    ];
-    
-    // Zambian Universities from YOUR website
-    const zambianUniversities = [
-        { name: "University of Zambia (UNZA)", link: "https://www.unza.zm/", programs: ["Medicine", "Law", "Engineering", "Business", "Computer Science", "Nursing", "Pharmacy"] },
-        { name: "Copperbelt University (CBU)", link: "https://www.cbu.ac.zm/", programs: ["Mining Engineering", "Metallurgical Engineering", "Computer Science", "Business", "Chemical Engineering", "Electrical Engineering"] },
-        { name: "Mulungushi University", link: "https://www.mu.ac.zm/", programs: ["Business Administration", "Accounting", "Computer Science", "Agriculture", "Economics", "Development Studies"] },
-        { name: "University of Lusaka (UNILUS)", link: "https://www.unilus.ac.zm/", programs: ["Law", "Business", "Computer Science", "MBA", "Public Administration", "International Relations"] },
-        { name: "Rusangu University", link: "https://www.rusangu-university.edu.zm/", programs: ["Theology", "Education", "Business", "Nursing", "Computer Science"] },
-        { name: "Lusaka Apex Medical University", link: "https://www.lamu.edu.zm/", programs: ["Medicine", "Nursing", "Pharmacy", "Public Health"] },
-        { name: "Evelyn Hone College", link: "https://www.evelynhone.edu.zm/", programs: ["Business Studies", "Accountancy", "Tourism", "IT", "Journalism", "Public Relations"] },
-        { name: "Natural Resources Development College", link: "https://www.nrdc.org.zm/", programs: ["Agriculture", "Environmental Science", "Forestry", "Wildlife Management", "Fisheries"] },
-        { name: "Zambia Centre for Accountancy Studies", link: "https://www.zcas.edu.zm/", programs: ["Accountancy", "Business Administration", "Information Technology"] },
-        { name: "DMI-St. Eugene University", link: "https://www.dmi.ac.zm/", programs: ["Theology", "Education", "Business", "Computer Science"] }
-    ];
-    
-    // Online Scholarship Platforms
-    const onlineScholarshipPlatforms = [
-        { name: "Scholarships for Africans", link: "https://www.scholarshipsforafricans.com/", description: "Database of scholarships for African students" },
-        { name: "Opportunity Desk", link: "https://opportunitydesk.org/", description: "Fellowships, scholarships, and grants worldwide" },
-        { name: "Youth Opportunities", link: "https://www.youthop.com/", description: "Scholarships, internships, and conferences" },
-        { name: "Scholarship Positions", link: "https://scholarship-positions.com/", description: "International scholarships database" },
-        { name: "Scholarship Roar", link: "https://www.scholarshiproar.com/", description: "Scholarships for developing countries" },
-        { name: "Masters Portal Scholarships", link: "https://www.mastersportal.com/scholarships/", description: "Scholarships for Master's programs" }
-    ];
-    
-    // Contact info from YOUR website
-    const contactInfo = {
-        email: "msmentorship3@gmail.com",
-        phone: "+260 976 452 281",
-        whatsapp: "https://chat.whatsapp.com/KsIR700DopR1IEId4QaSV0",
-        founderEmail: "siabanamilimo003@gmail.com",
-        helsbEmail: "info@helsb.gov.zm",
-        helsbPhone: "+260 211 250 688"
-    };
-    
-    // Initialize
-    initializeChat();
+    // Initialize chat
+    initializeAIChat();
     
     // Event Listeners
-    chatToggle.addEventListener('click', toggleChat);
-    chatHeader.addEventListener('click', toggleMinimize);
-    minimizeBtn.addEventListener('click', toggleMinimize);
-    closeBtn.addEventListener('click', closeChat);
-    sendBtn.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') sendMessage();
+    aiChatToggle.addEventListener('click', toggleAIChat);
+    aiMinimizeBtn.addEventListener('click', minimizeAIChat);
+    aiCloseBtn.addEventListener('click', closeAIChat);
+    aiSendBtn.addEventListener('click', sendAIMessage);
+    aiChatInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') sendAIMessage();
     });
     
     // Quick buttons
-    quickBtns.forEach(btn => {
+    aiQuickBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             const question = this.getAttribute('data-question');
-            chatInput.value = question;
-            sendMessage();
+            aiChatInput.value = question;
+            sendAIMessage();
         });
     });
     
     // Functions
-    function initializeChat() {
-        // Load chat history from localStorage if exists
-        const savedHistory = localStorage.getItem('msChatHistory');
-        if (savedHistory) {
-            chatHistory = JSON.parse(savedHistory);
-            chatHistory.forEach(msg => {
-                addMessageToUI(msg.text, msg.type);
-            });
-        }
+    function initializeAIChat() {
+        // Add initial welcome message
+        const welcomeMessage = `**Hello! I'm your MS Mentorship Assistant** 🤖\n\nI can help you with:\n🎓 **HELSB Bursaries & Scholarships**\n🏫 **Zambian University Programs**\n🌍 **International Opportunities**\n📋 **Application Guidance**\n💼 **Course Advice**\n\nWhat would you like to know today?`;
         
-        // Auto-open on first visit
-        const firstVisit = !localStorage.getItem('msChatVisited');
-        if (firstVisit) {
+        addAIMessage(welcomeMessage, 'bot');
+        
+        // Don't auto-open on mobile
+        if (!isMobile && !hasOpenedOnce) {
             setTimeout(() => {
-                toggleChat();
-                localStorage.setItem('msChatVisited', 'true');
-            }, 3000);
+                toggleAIChat();
+            }, 5000); // 5 second delay for first visit
         }
     }
     
-    function toggleChat() {
-        if (isMinimized) {
-            chatContainer.classList.remove('minimized');
-            chatContainer.style.transform = 'translateY(0)';
-            chatContainer.style.opacity = '1';
-            isMinimized = false;
-            setTimeout(() => chatInput.focus(), 300);
+    function toggleAIChat() {
+        if (!isChatOpen) {
+            aiChatContainer.classList.add('active');
+            isChatOpen = true;
+            localStorage.setItem('aiChatOpened', 'true');
+            hasOpenedOnce = true;
+            setTimeout(() => aiChatInput.focus(), 300);
+            aiChatToggle.style.transform = 'scale(1.1)';
+            setTimeout(() => aiChatToggle.style.transform = 'scale(1)', 200);
+        } else {
+            closeAIChat();
         }
     }
     
-    function toggleMinimize(e) {
+    function minimizeAIChat(e) {
         e.stopPropagation();
-        chatContainer.classList.toggle('minimized');
-        isMinimized = chatContainer.classList.contains('minimized');
+        aiChatContainer.classList.toggle('minimized');
+        isMinimized = !isMinimized;
+        aiChatToggle.style.display = isMinimized ? 'flex' : 'none';
     }
     
-    function closeChat() {
-        chatContainer.style.transform = 'translateY(20px)';
-        chatContainer.style.opacity = '0';
-        setTimeout(() => {
-            chatContainer.classList.add('minimized');
-            chatContainer.style.transform = 'translateY(0)';
-            chatContainer.style.opacity = '1';
-            isMinimized = true;
-        }, 300);
+    function closeAIChat() {
+        aiChatContainer.classList.remove('active');
+        isChatOpen = false;
+        aiChatContainer.classList.remove('minimized');
+        isMinimized = false;
+        aiChatToggle.style.display = 'flex';
     }
     
-    function sendMessage() {
-        const message = chatInput.value.trim();
+    function sendAIMessage() {
+        const message = aiChatInput.value.trim();
         if (!message) return;
         
         // Add user message
-        addMessageToUI(message, 'user');
-        chatInput.value = '';
+        addAIMessage(message, 'user');
+        lastQuery = message;
+        aiChatInput.value = '';
+        
+        // Hide suggested questions
+        aiSuggestedQuestions.classList.add('hidden');
         
         // Show typing indicator
-        typingIndicator.style.display = 'block';
-        scrollToBottom();
+        aiTypingIndicator.style.display = 'block';
+        scrollToAIBottom();
         
         // Simulate AI thinking
         setTimeout(() => {
-            typingIndicator.style.display = 'none';
+            aiTypingIndicator.style.display = 'none';
             const aiResponse = generateAIResponse(message);
-            addMessageToUI(aiResponse, 'ai');
+            addAIMessage(aiResponse, 'bot');
             
-            // Save to history
-            saveToHistory(message, 'user');
-            saveToHistory(aiResponse, 'ai');
-        }, 800 + Math.random() * 800);
+            // Save to conversation history for context
+            saveToConversationHistory(message, aiResponse);
+        }, 1000 + Math.random() * 500);
     }
     
-    function addMessageToUI(text, type) {
+    function addAIMessage(text, type) {
         const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${type}-message`;
-        messageDiv.innerHTML = formatMessage(text);
-        chatMessages.appendChild(messageDiv);
-        scrollToBottom();
+        messageDiv.className = `ai-message ai-${type}-message`;
+        messageDiv.innerHTML = formatAIMessage(text, type);
+        aiChatMessages.appendChild(messageDiv);
+        scrollToAIBottom();
     }
     
-    function formatMessage(text) {
-        // Format links and special content
-        return text
+    function formatAIMessage(text, type) {
+        // Format links, bold text, and special content
+        let formatted = text
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
             .replace(/\n/g, '<br>')
             .replace(/\[scholarships\]/g, `<a href="#scholarships" onclick="scrollToSection('#scholarships')" style="color: var(--primary-blue); text-decoration: underline; font-weight: 600;">Scholarship Finder</a>`)
-            .replace(/\[universities\]/g, `<a href="#find-course" onclick="scrollToSection('#find-course')" style="color: var(--primary-blue); text-decoration: underline; font-weight: 600;">University Finder</a>`)
-            .replace(/\[how-to-apply\]/g, `<a href="#how-to-apply" onclick="scrollToSection('#how-to-apply')" style="color: var(--primary-blue); text-decoration: underline; font-weight: 600;">How to Apply section</a>`)
-            .replace(/\[helsb-website\]/g, `<a href="${helsbInfo.website}" target="_blank" style="color: var(--primary-blue); text-decoration: underline; font-weight: 600;">HELSB Official Website</a>`);
+            .replace(/\[universities\]/g, `<a href="#find-course" onclick="scrollToSection('#find-course')" style="color: var(--primary-blue); text-decoration: underline; font-weight: 600;">University Finder</a>`);
+        
+        // Add apology styling if it's an apology
+        if (text.includes('apologize') || text.includes('sorry') || text.includes('unclear')) {
+            formatted = `<div class="ai-apology-message">${formatted}</div>`;
+        }
+        
+        // Add scholarship highlight for scholarship-related messages
+        if (text.toLowerCase().includes('scholarship') || text.toLowerCase().includes('bursary')) {
+            formatted = formatted.replace(/(deadline|application|apply|funding)/gi, '<strong>$1</strong>');
+        }
+        
+        return formatted;
     }
     
-    function scrollToBottom() {
+    function scrollToAIBottom() {
         setTimeout(() => {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
         }, 100);
     }
     
-    function saveToHistory(text, type) {
-        chatHistory.push({ text, type, timestamp: new Date().toISOString() });
-        // Keep last 50 messages
-        if (chatHistory.length > 50) {
-            chatHistory = chatHistory.slice(-50);
+    function saveToConversationHistory(userMessage, aiResponse) {
+        // Keep last 10 exchanges for context
+        conversationHistory.push({
+            user: userMessage,
+            ai: aiResponse,
+            timestamp: new Date().toISOString()
+        });
+        
+        if (conversationHistory.length > 10) {
+            conversationHistory = conversationHistory.slice(-10);
         }
-        localStorage.setItem('msChatHistory', JSON.stringify(chatHistory));
     }
     
-    // Helper function to scroll to page sections
+    // Comprehensive knowledge base from YOUR website
+    const knowledgeBase = {
+        // HELSB Information
+        helsb: {
+            description: "Higher Education Loans and Scholarships Board (HELSB) provides financial assistance to Zambian students admitted to accredited higher education institutions.",
+            website: "https://www.helsb.gov.zm/",
+            email: "info@helsb.gov.zm",
+            phone: "+260 211 250 688",
+            bursaries2025: {
+                deadline: "Varies (Usually March-April)",
+                eligibility: [
+                    "Zambian citizens",
+                    "Admitted to accredited institution",
+                    "Demonstrated financial need",
+                    "Good academic performance"
+                ],
+                coverage: ["Tuition", "Accommodation", "Books", "Meals"]
+            }
+        },
+        
+        // Zambian Universities
+        universities: [
+            {
+                name: "University of Zambia (UNZA)",
+                link: "https://www.unza.zm/",
+                popularPrograms: ["Medicine", "Law", "Engineering", "Business", "Computer Science"],
+                requirements: "Grade 12 with 5 credits, minimum 10 points"
+            },
+            {
+                name: "Copperbelt University (CBU)",
+                link: "https://www.cbu.ac.zm/",
+                popularPrograms: ["Mining Engineering", "Metallurgical Engineering", "Computer Science"],
+                requirements: "Grade 12 with credits in relevant subjects, minimum 12 points"
+            },
+            {
+                name: "Mulungushi University",
+                link: "https://www.mu.ac.zm/",
+                popularPrograms: ["Business Administration", "Accounting", "Computer Science"],
+                requirements: "Grade 12 with 5 credits, minimum 10 points"
+            }
+        ],
+        
+        // Scholarships from your website
+        scholarships: [
+            {
+                name: "Chinese Government Scholarship (CSC)",
+                deadline: "March-April 2025",
+                link: "http://www.csc.edu.cn/studyinchina",
+                level: "All levels"
+            },
+            {
+                name: "Turkish Government Scholarships",
+                deadline: "Feb 20, 2025",
+                link: "https://www.turkiyeburslari.gov.tr",
+                level: "All levels"
+            },
+            {
+                name: "Moroccan Government Scholarship via HELSB",
+                deadline: "June 13, 2025",
+                link: "https://helsb.gov.zm",
+                level: "Undergraduate"
+            }
+        ],
+        
+        // Course Advice
+        courseAdvice: {
+            stem: {
+                programs: ["Engineering", "Medicine", "Computer Science", "Pharmacy"],
+                advice: "Focus on Mathematics and Sciences. Consider CBU for mining/engineering, UNZA for medicine."
+            },
+            business: {
+                programs: ["Business Administration", "Accounting", "Economics", "Finance"],
+                advice: "Good communication skills important. UNZA, Mulungushi, and UNILUS offer strong programs."
+            },
+            humanities: {
+                programs: ["Law", "Education", "Social Work", "Development Studies"],
+                advice: "Strong English skills required. UNZA Law School is highly respected."
+            }
+        },
+        
+        // Application Tips
+        applicationTips: [
+            "Start 6-12 months before intended intake",
+            "Prepare all documents early (transcripts, recommendations)",
+            "Write compelling personal statements",
+            "Apply to multiple opportunities",
+            "Follow up on applications"
+        ]
+    };
+    
+    // AI Response Generator - Improved with better search
+    function generateAIResponse(userMessage) {
+        const msg = userMessage.toLowerCase();
+        let response = '';
+        
+        // Check conversation history for context
+        const lastExchange = conversationHistory[conversationHistory.length - 2];
+        const isFollowUp = lastExchange && 
+                          (lastExchange.user.toLowerCase().includes('helsb') || 
+                           lastExchange.user.toLowerCase().includes('scholarship') ||
+                           lastExchange.user.toLowerCase().includes('university'));
+        
+        // HELSB Queries
+        if (msg.includes('helsb') || msg.includes('bursary') || msg.includes('student loan') || 
+            (isFollowUp && lastExchange.user.toLowerCase().includes('helsb'))) {
+            
+            response = generateHELSBResponse(msg);
+        }
+        // Scholarship Queries
+        else if (msg.includes('scholarship') || msg.includes('funding') || msg.includes('financial aid') ||
+                 (isFollowUp && lastExchange.user.toLowerCase().includes('scholarship'))) {
+            
+            response = generateScholarshipResponse(msg);
+        }
+        // University Queries
+        else if (msg.includes('university') || msg.includes('college') || msg.includes('program') || 
+                 msg.includes('course') || msg.includes('degree') ||
+                 (isFollowUp && lastExchange.user.toLowerCase().includes('university'))) {
+            
+            response = generateUniversityResponse(msg);
+        }
+        // Course Advice
+        else if (msg.includes('course') || msg.includes('program') || msg.includes('study') || 
+                 msg.includes('career') || msg.includes('what should i study')) {
+            
+            response = generateCourseAdvice(msg);
+        }
+        // Application Process
+        else if (msg.includes('apply') || msg.includes('application') || msg.includes('admission') || 
+                 msg.includes('requirement') || msg.includes('deadline')) {
+            
+            response = generateApplicationResponse(msg);
+        }
+        // How to find scholarships
+        else if (msg.includes('find scholarship') || msg.includes('look for scholarship') || 
+                 msg.includes('search for funding')) {
+            
+            response = generateScholarshipSearchResponse(msg);
+        }
+        // Contact queries
+        else if (msg.includes('contact') || msg.includes('email') || msg.includes('phone') || 
+                 msg.includes('whatsapp') || msg.includes('talk to')) {
+            
+            response = `**Contact MS Mentorship:**\n\n📧 Email: msmentorship3@gmail.com\n📞 Phone/WhatsApp: +260 976 452 281\n💬 WhatsApp Group: https://chat.whatsapp.com/HtA7cxJKK5dGE5JC7Bv6Pj\n\n👨‍🏫 Founder: Milimo Siabana (siabanamilimo003@gmail.com)\n\nWe typically respond within 24 hours. For urgent queries, please call!`;
+        }
+        // Greetings
+        else if (msg.match(/^(hello|hi|hey|good morning|good afternoon)/)) {
+            response = `Hello! 👋 How can I assist you with your education journey today?\n\nYou can ask me about:\n• HELSB bursaries and scholarships\n• Zambian university programs\n• International opportunities\n• Course selection advice\n• Application processes`;
+        }
+        // Thank you
+        else if (msg.includes('thank') || msg.includes('thanks')) {
+            response = `You're very welcome! 😊 I'm here to help you succeed. Remember to check our website regularly for updates on scholarships and university admissions.\n\nGood luck with your applications! 🎓`;
+        }
+        // Not satisfied response
+        else if (msg.includes('not satisfied') || msg.includes('not happy') || msg.includes('not helpful') || 
+                 msg.includes('not clear') || msg.includes('doesn\'t help')) {
+            
+            response = `**I apologize if my previous response wasn't helpful.** 😔\n\nLet me try to assist you better. Could you please:\n1. Be more specific about what you're looking for?\n2. Or tell me which part of my response was unclear?\n\nI want to make sure I provide you with the exact information you need for your education journey.`;
+        }
+        // Default/unknown query
+        else {
+            response = generateComprehensiveResponse(msg);
+        }
+        
+        return response;
+    }
+    
+    // Response generators
+    function generateHELSBResponse(query) {
+        let response = `**🎓 HELSB (Higher Education Loans and Scholarships Board)**\n\n`;
+        
+        response += `**What is HELSB?**\n${knowledgeBase.helsb.description}\n\n`;
+        response += `**📞 Contact:**\n• Website: ${knowledgeBase.helsb.website}\n• Email: ${knowledgeBase.helsb.email}\n• Phone: ${knowledgeBase.helsb.phone}\n\n`;
+        
+        response += `**📋 2025 Bursaries:**\n`;
+        response += `• **Deadline:** ${knowledgeBase.helsb.bursaries2025.deadline}\n`;
+        response += `• **Eligibility:** ${knowledgeBase.helsb.bursaries2025.eligibility.join(', ')}\n`;
+        response += `• **Coverage:** ${knowledgeBase.helsb.bursaries2025.coverage.join(', ')}\n\n`;
+        
+        response += `**🌍 Scholarships through HELSB:**\n`;
+        knowledgeBase.scholarships.filter(s => s.link.includes('helsb')).forEach(s => {
+            response += `• **${s.name}** - Deadline: ${s.deadline}\n`;
+        });
+        
+        response += `\n**💡 Tips:**\n1. Check the HELSB website regularly for announcements\n2. Apply as soon as applications open\n3. Ensure all documents are certified\n4. Follow up on your application status`;
+        
+        return response;
+    }
+    
+    function generateScholarshipResponse(query) {
+        let response = `**🌍 Available Scholarships for Zambian Students**\n\n`;
+        
+        // Filter based on query
+        let filteredScholarships = knowledgeBase.scholarships;
+        
+        if (query.includes('china') || query.includes('chinese')) {
+            filteredScholarships = filteredScholarships.filter(s => s.name.toLowerCase().includes('china'));
+            response += `**🇨🇳 Chinese Scholarships:**\n`;
+        }
+        else if (query.includes('turkey') || query.includes('turkish')) {
+            filteredScholarships = filteredScholarships.filter(s => s.name.toLowerCase().includes('turkish'));
+            response += `**🇹🇷 Turkish Scholarships:**\n`;
+        }
+        else if (query.includes('online')) {
+            response += `**🌐 Online Scholarship Platforms:**\n`;
+            response += `• Scholarships for Africans: https://www.scholarshipsforafricans.com/\n`;
+            response += `• Opportunity Desk: https://opportunitydesk.org/\n`;
+            response += `• Youth Opportunities: https://www.youthop.com/\n`;
+            response += `\n**Tip:** These platforms update daily with new opportunities!\n\n`;
+            response += `**Current Online Scholarships:**\n`;
+        }
+        else {
+            response += `**Featured Scholarships:**\n`;
+        }
+        
+        // Add scholarships
+        filteredScholarships.forEach((scholarship, index) => {
+            if (index < 5) {
+                response += `• **${scholarship.name}**\n`;
+                response += `  📅 Deadline: ${scholarship.deadline}\n`;
+                response += `  🎓 Level: ${scholarship.level}\n`;
+                response += `  🔗 Apply: ${scholarship.link}\n\n`;
+            }
+        });
+        
+        response += `**🔍 For more options, use our [scholarships] filtering tool above!**`;
+        
+        return response;
+    }
+    
+    function generateUniversityResponse(query) {
+        let response = `**🏫 Zambian Universities & Programs**\n\n`;
+        
+        // Check for specific university
+        if (query.includes('unza') || query.includes('university of zambia')) {
+            const unza = knowledgeBase.universities[0];
+            response += `**${unza.name}**\n`;
+            response += `🔗 Website: ${unza.link}\n`;
+            response += `🎓 Popular Programs: ${unza.popularPrograms.join(', ')}\n`;
+            response += `📋 Requirements: ${unza.requirements}\n`;
+            response += `📍 Location: Lusaka, Zambia\n\n`;
+            response += `**Application Deadlines:**\n• Undergraduate: Usually closes in April for August intake\n• Check the website for exact dates\n\n`;
+            response += `**💡 Tip:** UNZA is highly competitive, especially for Medicine and Law. Apply early!`;
+        }
+        else if (query.includes('cbu') || query.includes('copperbelt')) {
+            const cbu = knowledgeBase.universities[1];
+            response += `**${cbu.name}**\n`;
+            response += `🔗 Website: ${cbu.link}\n`;
+            response += `🎓 Popular Programs: ${cbu.popularPrograms.join(', ')}\n`;
+            response += `📋 Requirements: ${cbu.requirements}\n`;
+            response += `📍 Location: Kitwe, Zambia\n\n`;
+            response += `**Special Note:** CBU is excellent for engineering and mining-related programs!`;
+        }
+        else if (query.includes('medicine') || query.includes('medical') || query.includes('mbchb')) {
+            response += `**🩺 Medicine Programs in Zambia:**\n\n`;
+            response += `**University of Zambia (UNZA)**\n• Program: MBChB (6 years)\n• Requirements: Grade 12 with Biology, Chemistry, Physics, Mathematics, English (minimum 10-12 points)\n• Website: https://www.unza.zm/\n\n`;
+            response += `**Lusaka Apex Medical University (LAMU)**\n• Program: MBChB\n• Requirements: Similar to UNZA\n• Website: https://www.lamu.edu.zm/\n\n`;
+            response += `**💡 Admission Tips:**\n1. Excellent grades in sciences required\n2. Prepare for potential entrance exams\n3. Apply to multiple medical schools\n4. Consider pre-medical programs`;
+        }
+        else if (query.includes('engineering')) {
+            response += `**⚙️ Engineering Programs in Zambia:**\n\n`;
+            knowledgeBase.universities.forEach(uni => {
+                if (uni.popularPrograms.some(p => p.toLowerCase().includes('engineer'))) {
+                    response += `**${uni.name}**\n• Programs: ${uni.popularPrograms.filter(p => p.toLowerCase().includes('engineer')).join(', ')}\n• Website: ${uni.link}\n\n`;
+                }
+            });
+            response += `**Requirements:** Grade 12 credits in Mathematics, Physics, Chemistry, English (minimum 12 points)`;
+        }
+        else {
+            response += `**Top Zambian Universities:**\n\n`;
+            knowledgeBase.universities.forEach((uni, index) => {
+                response += `${index + 1}. **${uni.name}**\n`;
+                response += `   🎓 ${uni.popularPrograms.slice(0, 3).join(', ')}\n`;
+                response += `   🔗 ${uni.link}\n\n`;
+            });
+            
+            response += `**🔍 Search specific programs in our [universities] tool above!**\n\n`;
+            response += `**Quick Tips:**\n• UNZA is best for Medicine, Law, and Social Sciences\n• CBU is strongest for Engineering and Mining\n• Mulungushi offers great Business programs`;
+        }
+        
+        return response;
+    }
+    
+    function generateCourseAdvice(query) {
+        let response = `**🎯 Course & Program Advice**\n\n`;
+        
+        if (query.includes('engineering') || query.includes('medicine') || query.includes('science') || 
+            query.includes('technology') || query.includes('math')) {
+            response += `**STEM (Science, Technology, Engineering, Mathematics)**\n\n`;
+            response += `**Recommended Programs:**\n${knowledgeBase.courseAdvice.stem.programs.join(', ')}\n\n`;
+            response += `**Advice:**\n${knowledgeBase.courseAdvice.stem.advice}\n\n`;
+            response += `**Top Universities:**\n• University of Zambia (UNZA)\n• Copperbelt University (CBU)\n• Mulungushi University\n\n`;
+            response += `**Scholarships:** Many STEM scholarships available! Check our scholarship finder.`;
+        }
+        else if (query.includes('business') || query.includes('commerce') || query.includes('account') || 
+                 query.includes('finance') || query.includes('management')) {
+            response += `**Business & Commerce**\n\n`;
+            response += `**Recommended Programs:**\n${knowledgeBase.courseAdvice.business.programs.join(', ')}\n\n`;
+            response += `**Advice:**\n${knowledgeBase.courseAdvice.business.advice}\n\n`;
+            response += `**Top Universities:**\n• University of Zambia (UNZA)\n• Mulungushi University\n• University of Lusaka (UNILUS)\n• Copperbelt University (CBU)\n\n`;
+            response += `**Career Paths:** Banking, Accounting, Management, Entrepreneurship`;
+        }
+        else if (query.includes('law') || query.includes('education') || query.includes('social') || 
+                 query.includes('development') || query.includes('arts')) {
+            response += `**Humanities & Social Sciences**\n\n`;
+            response += `**Recommended Programs:**\n${knowledgeBase.courseAdvice.humanities.programs.join(', ')}\n\n`;
+            response += `**Advice:**\n${knowledgeBase.courseAdvice.humanities.advice}\n\n`;
+            response += `**Top Universities:**\n• University of Zambia (UNZA) - Best for Law\n• Mulungushi University\n• University of Lusaka (UNILUS)\n\n`;
+            response += `**Scholarships:** Check HELSB and government scholarships for these fields.`;
+        }
+        else {
+            response += `**How to Choose a Course:**\n\n`;
+            response += `1. **Consider Your Interests** - What subjects do you enjoy?\n`;
+            response += `2. **Assess Your Strengths** - What are you good at?\n`;
+            response += `3. **Research Careers** - What jobs are available?\n`;
+            response += `4. **Check Requirements** - Do you meet the entry criteria?\n`;
+            response += `5. **Consider Job Market** - What fields are growing in Zambia?\n\n`;
+            response += `**Popular Fields in Zambia:**\n• Healthcare (Medicine, Nursing, Pharmacy)\n• Engineering (Mining, Civil, Electrical)\n• Business & Finance\n• Education\n• Information Technology\n\n`;
+            response += `**💡 Need specific advice? Tell me what subjects you're good at and interested in!**`;
+        }
+        
+        return response;
+    }
+    
+    function generateApplicationResponse(query) {
+        let response = `**📋 Application Process Guide**\n\n`;
+        
+        response += `**Step-by-Step Process:**\n`;
+        response += `1. **Research** - Find suitable programs/scholarships\n`;
+        response += `2. **Prepare Documents** - Transcripts, recommendations, personal statement\n`;
+        response += `3. **Check Deadlines** - Mark all important dates\n`;
+        response += `4. **Submit Applications** - Complete all forms accurately\n`;
+        response += `5. **Follow Up** - Check application status regularly\n\n`;
+        
+        response += `**Required Documents:**\n`;
+        response += `• Certified academic transcripts\n`;
+        response += `• Recommendation letters (2-3)\n`;
+        response += `• Personal statement/motivation letter\n`;
+        response += `• Copy of NRC/Passport\n`;
+        response += `• Passport photos\n`;
+        response += `• Proof of English proficiency (if required)\n\n`;
+        
+        response += `**💡 Pro Tips:**\n`;
+        response += `• Start applications 6-12 months before deadline\n`;
+        response += `• Apply to multiple opportunities\n`;
+        response += `• Tailor each application\n`;
+        response += `• Proofread everything\n`;
+        response += `• Keep copies of all submissions\n\n`;
+        
+        response += `**Need help with a specific application? Tell me which one!**`;
+        
+        return response;
+    }
+    
+    function generateScholarshipSearchResponse(query) {
+        let response = `**🔍 How to Find Scholarships**\n\n`;
+        
+        response += `**1. Government Scholarships (Best for Zambians):**\n`;
+        response += `• **HELSB Bursaries** - Check their website regularly\n`;
+        response += `• **Government Bilateral Scholarships** - Through Ministry of Education\n\n`;
+        
+        response += `**2. University Scholarships:**\n`;
+        response += `• Check university websites for merit-based scholarships\n`;
+        response += `• Look for department-specific funding\n\n`;
+        
+        response += `**3. International Scholarships:**\n`;
+        response += `• **Country-specific:** China, Turkey, Russia, Japan, etc.\n`;
+        response += `• **Organization-specific:** Mastercard Foundation, Commonwealth, etc.\n\n`;
+        
+        response += `**4. Online Platforms:**\n`;
+        response += `• Scholarships for Africans\n`;
+        response += `• Opportunity Desk\n`;
+        response += `• Youth Opportunities\n`;
+        response += `• Scholarship Positions\n\n`;
+        
+        response += `**5. Our Resources:**\n`;
+        response += `• Use our [scholarships] filtering tool\n`;
+        response += `• Join our WhatsApp group for updates\n`;
+        response += `• Attend our free webinars\n\n`;
+        
+        response += `**💡 Search Strategy:**\n`;
+        response += `• Search by your country (Zambia)\n`;
+        response += `• Search by your field of study\n`;
+        response += `• Search by study level (undergraduate, masters, etc.)\n`;
+        response += `• Set up email alerts on scholarship websites`;
+        
+        return response;
+    }
+    
+    function generateComprehensiveResponse(query) {
+        // Try to find relevant information from knowledge base
+        const keywords = query.toLowerCase().split(' ');
+        let foundMatches = [];
+        
+        // Search in universities
+        knowledgeBase.universities.forEach(uni => {
+            if (keywords.some(keyword => 
+                uni.name.toLowerCase().includes(keyword) || 
+                uni.popularPrograms.some(program => program.toLowerCase().includes(keyword)))) {
+                foundMatches.push(`university:${uni.name}`);
+            }
+        });
+        
+        // Search in scholarships
+        knowledgeBase.scholarships.forEach(scholarship => {
+            if (keywords.some(keyword => scholarship.name.toLowerCase().includes(keyword))) {
+                foundMatches.push(`scholarship:${scholarship.name}`);
+            }
+        });
+        
+        if (foundMatches.length > 0) {
+            if (foundMatches[0].startsWith('university:')) {
+                const uniName = foundMatches[0].replace('university:', '');
+                const university = knowledgeBase.universities.find(u => u.name === uniName);
+                return generateUniversityResponse(uniName.toLowerCase());
+            } else if (foundMatches[0].startsWith('scholarship:')) {
+                const scholarshipName = foundMatches[0].replace('scholarship:', '');
+                return generateScholarshipResponse(scholarshipName.toLowerCase());
+            }
+        }
+        
+        // Default comprehensive response
+        return `I understand you're asking about: **"${query}"**\n\nI can help you with various education-related topics:\n\n**For specific information, try asking about:**\n• "HELSB application process for 2025"\n• "Medicine programs at UNZA"\n• "Scholarships for engineering students"\n• "How to apply to Copperbelt University"\n• "Online scholarship opportunities"\n• "Course selection advice for business"\n\n**Or use our website tools:**\n🎓 **[scholarships]** - Filter scholarships by country and type\n🏫 **[universities]** - Search university programs and requirements\n\n**How can I specifically assist you today?**`;
+    }
+    
+    // Global scroll function
     window.scrollToSection = function(sectionId) {
         const element = document.querySelector(sectionId);
         if (element) {
@@ -2581,208 +2826,15 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             // Close chat on mobile after clicking link
             if (window.innerWidth <= 768) {
-                closeChat();
+                closeAIChat();
             }
         }
     };
-    
-    // AI Response Logic - WITH COMPREHENSIVE HELSB INFO
-    function generateAIResponse(userMessage) {
-        const msg = userMessage.toLowerCase();
-        
-        // HELSB SPECIFIC QUERIES
-        if (msg.includes('helsb') || msg.includes('bursary') || msg.includes('zambian government loan') || 
-            msg.includes('government scholarship') || msg.includes('student loan zambia')) {
-            
-            let response = `<div class="scholarship-highlight">
-                <strong>🎓 ${helsbInfo.name}</strong><br>
-                <strong>Website:</strong> <a href="${helsbInfo.website}" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">${helsbInfo.website}</a><br>
-                <strong>Email:</strong> <a href="mailto:${contactInfo.helsbEmail}" style="color: var(--primary-blue); text-decoration: underline;">${contactInfo.helsbEmail}</a><br>
-                <strong>Phone:</strong> <a href="tel:${contactInfo.helsbPhone}" style="color: var(--primary-blue); text-decoration: underline;">${contactInfo.helsbPhone}</a>
-            </div><br>`;
-            
-            response += `<strong>${helsbInfo.bursaries2026.title}</strong><br>`;
-            response += `<strong>Deadline:</strong> ${helsbInfo.bursaries2026.deadline}<br><br>`;
-            
-            response += `<strong>📋 Eligibility:</strong><br>`;
-            helsbInfo.bursaries2026.eligibility.forEach(item => {
-                response += `• ${item}<br>`;
-            });
-            
-            response += `<br><strong>💰 Coverage:</strong><br>`;
-            helsbInfo.bursaries2026.coverage.forEach(item => {
-                response += `• ${item}<br>`;
-            });
-            
-            response += `<br><strong>📝 How to Apply:</strong><br>`;
-            helsbInfo.bursaries2026.applicationProcess.forEach((step, index) => {
-                response += `${index + 1}. ${step}<br>`;
-            });
-            
-            response += `<br><strong>🌍 Scholarships through HELSB:</strong><br>`;
-            helsbInfo.scholarshipsThroughHELSB.forEach(scholarship => {
-                response += `• <a href="${helsbInfo.website}" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">${scholarship.name}</a> (${scholarship.level}) - Deadline: ${scholarship.deadline}<br>`;
-            });
-            
-            response += `<br><strong>💡 Tip:</strong> Check the [helsb-website] regularly for announcements and application forms!`;
-            
-            return response;
-        }
-        
-        // Scholarship queries - WITH ONLINE SCHOLARSHIPS
-        if (msg.includes('scholarship') || msg.includes('funding') || msg.includes('financial aid') || 
-            msg.includes('sponsorship') || msg.includes('online scholarship')) {
-            
-            let response = `**🎓 Available Scholarships:**\n\n`;
-            
-            // Filter scholarships based on query
-            let filteredScholarships = websiteScholarships;
-            
-            if (msg.includes('online') || msg.includes('website') || msg.includes('portal')) {
-                response += `**🌐 Online Scholarship Platforms:**\n`;
-                onlineScholarshipPlatforms.forEach(platform => {
-                    response += `• <a href="${platform.link}" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">${platform.name}</a> - ${platform.description}\n`;
-                });
-                response += `\n**💡 Tip:** These platforms update daily with new opportunities!\n`;
-            }
-            else if (msg.includes('zambia') || msg.includes('local')) {
-                filteredScholarships = websiteScholarships.filter(s => s.country.toLowerCase().includes('zambia') || s.type === 'government');
-                response += `**🇿🇲 Zambian Scholarships:**\n`;
-                filteredScholarships.forEach((scholarship, index) => {
-                    if (index < 6) {
-                        response += `• <a href="${scholarship.link}" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">${scholarship.title}</a>\n`;
-                        if (scholarship.deadline) response += `  <small>Deadline: ${scholarship.deadline}</small>\n`;
-                    }
-                });
-            }
-            else if (msg.includes('china') || msg.includes('chinese')) {
-                filteredScholarships = websiteScholarships.filter(s => s.country.toLowerCase().includes('china'));
-                response += `**🇨🇳 Chinese Scholarships:**\n`;
-                filteredScholarships.forEach(scholarship => {
-                    response += `• <a href="${scholarship.link}" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">${scholarship.title}</a>\n`;
-                });
-            }
-            else if (msg.includes('turkey') || msg.includes('turkish')) {
-                filteredScholarships = websiteScholarships.filter(s => s.country.toLowerCase().includes('turkey'));
-                response += `**🇹🇷 Turkish Scholarships:**\n`;
-                filteredScholarships.forEach(scholarship => {
-                    response += `• <a href="${scholarship.link}" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">${scholarship.title}</a>\n`;
-                });
-            }
-            else {
-                response += `**🌍 International Scholarships:**\n`;
-                // Show a mix of different countries
-                const countryGroups = {};
-                websiteScholarships.forEach(scholarship => {
-                    if (!countryGroups[scholarship.country]) {
-                        countryGroups[scholarship.country] = [];
-                    }
-                    countryGroups[scholarship.country].push(scholarship);
-                });
-                
-                // Show 2 scholarships from top countries
-                Object.keys(countryGroups).slice(0, 4).forEach(country => {
-                    response += `\n**${country.toUpperCase()}:**\n`;
-                    countryGroups[country].slice(0, 2).forEach(scholarship => {
-                        response += `• <a href="${scholarship.link}" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">${scholarship.title}</a>\n`;
-                    });
-                });
-            }
-            
-            response += `\n**🔍 Use our [scholarships] tool to filter by country, type, and study level!**`;
-            
-            return response;
-        }
-        
-        // University queries
-        if (msg.includes('university') || msg.includes('college') || msg.includes('institution') || 
-            msg.includes('program') || msg.includes('course') || msg.includes('degree')) {
-            
-            let response = `**🏫 Universities on MS Mentorship:**\n\n`;
-            
-            // Check for specific program queries
-            if (msg.includes('medicine') || msg.includes('medical') || msg.includes('doctor') || msg.includes('mbchb')) {
-                response += `**🩺 Medicine Programs in Zambia:**\n`;
-                response += `• <a href="https://www.unza.zm/" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">University of Zambia (UNZA)</a> - MBChB (6 years)\n`;
-                response += `• <a href="https://www.lamu.edu.zm/" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">Lusaka Apex Medical University</a> - MBChB\n`;
-                response += `• <a href="https://www.cbu.ac.zm/" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">Copperbelt University (CBU)</a> - Biomedical Sciences\n`;
-                response += `\n**Requirements:** Grade 12 with 5 credits including Biology, Chemistry, Physics, Mathematics, English. Minimum 10-12 points.\n`;
-            }
-            else if (msg.includes('engineering') || msg.includes('engineer')) {
-                response += `**⚙️ Engineering Programs:**\n`;
-                response += `• <a href="https://www.cbu.ac.zm/" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">Copperbelt University (CBU)</a> - Mining, Mechanical, Electrical, Chemical\n`;
-                response += `• <a href="https://www.unza.zm/" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">University of Zambia (UNZA)</a> - Civil, Electrical, Mechanical, Computer\n`;
-                response += `• <a href="https://www.mu.ac.zm/" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">Mulungushi University</a> - Various engineering fields\n`;
-                response += `\n**Requirements:** Grade 12 credits in Mathematics, Physics, Chemistry, English. Minimum 12 points.\n`;
-            }
-            else if (msg.includes('law') || msg.includes('llb') || msg.includes('lawyer')) {
-                response += `**⚖️ Law Programs:**\n`;
-                response += `• <a href="https://www.unza.zm/" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">University of Zambia (UNZA)</a> - LLB (4 years)\n`;
-                response += `• <a href="https://www.unilus.ac.zm/" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">University of Lusaka (UNILUS)</a> - LLB\n`;
-                response += `\n**Requirements:** Grade 12 with 5 credits including English. Minimum 10 points. Entrance test may be required.\n`;
-            }
-            else if (msg.includes('business') || msg.includes('commerce') || msg.includes('accounting') || msg.includes('mba')) {
-                response += `**💼 Business Programs:**\n`;
-                zambianUniversities.forEach(uni => {
-                    if (uni.programs.some(p => p.toLowerCase().includes('business') || 
-                        p.toLowerCase().includes('account') || 
-                        p === 'MBA' || 
-                        p.toLowerCase().includes('commerce'))) {
-                        response += `• <a href="${uni.link}" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">${uni.name}</a>\n`;
-                    }
-                });
-                response += `\n**Requirements:** Grade 12 with 5 credits including English and Mathematics. Minimum 10 points.\n`;
-            }
-            else {
-                response += `**🇿🇲 Top Zambian Universities:**\n`;
-                zambianUniversities.slice(0, 5).forEach(uni => {
-                    response += `• <a href="${uni.link}" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">${uni.name}</a>\n`;
-                });
-                
-                response += `\n**🎓 Popular Programs:**\n`;
-                response += `• Medicine & Health Sciences\n`;
-                response += `• Engineering & Technology\n`;
-                response += `• Business & Economics\n`;
-                response += `• Computer Science & IT\n`;
-                response += `• Law & Social Sciences\n`;
-            }
-            
-            response += `\n**🔍 Search specific programs in our [universities] tool above!**`;
-            
-            return response;
-        }
-        
-        // Application process queries
-        if (msg.includes('apply') || msg.includes('application') || msg.includes('admission') || 
-            msg.includes('requirement') || msg.includes('deadline') || msg.includes('process')) {
-            return `**📋 Application Process:**\n\nWe have a detailed 5-step guide in our [how-to-apply] section!\n\n**Key steps:**\n1. Research & choose programs\n2. Prepare documents (transcripts, recommendations, personal statement)\n3. Craft your application\n4. Submit before deadlines\n5. Prepare for interviews\n\n**📅 Important Deadlines:**\n• **HELSB Bursaries:** Varies (check [helsb-website])\n• **Turkish Scholarships:** Feb 20, 2025\n• **Chinese Scholarships (CSC):** March-April 2025\n• **University of Pretoria:** Opens Feb 1, 2026 for 2027 intake\n• **Commonwealth Scholarships:** Dec 18, 2024\n\n**💡 Tip:** Start applications 6-12 months before your intended intake!`;
-        }
-        
-        // Contact queries
-        if (msg.includes('contact') || msg.includes('mentor') || msg.includes('speak') || 
-            msg.includes('talk') || msg.includes('help') || msg.includes('email') || 
-            msg.includes('phone') || msg.includes('whatsapp')) {
-            return `**👥 Contact MS Mentorship:**\n\n**📧 General Email:** <a href="mailto:${contactInfo.email}" style="color: var(--primary-blue); text-decoration: underline;">${contactInfo.email}</a>\n**📞 Phone/WhatsApp:** <a href="tel:${contactInfo.phone}" style="color: var(--primary-blue); text-decoration: underline;">${contactInfo.phone}</a>\n**💬 WhatsApp Group:** <a href="${contactInfo.whatsapp}" target="_blank" style="color: var(--primary-blue); text-decoration: underline;">Join Here</a>\n\n**👨‍🏫 Founder:** Milimo Siabana (<a href="mailto:${contactInfo.founderEmail}" style="color: var(--primary-blue); text-decoration: underline;">${contactInfo.founderEmail}</a>)\n\n**⏱️ Response Time:** Usually within 24 hours. For urgent queries, please call!`;
-        }
-        
-        // Greetings
-        if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey') || msg.includes('good')) {
-            return `Hello! 👋 I'm the MS Mentorship Assistant. I can help you with:\n• **HELSB bursaries & Zambian scholarships**\n• **University programs in Zambia**\n• **International scholarship opportunities**\n• **Application guidance**\n\nWhat would you like to know about?`;
-        }
-        
-        // Thank you
-        if (msg.includes('thank') || msg.includes('thanks') || msg.includes('appreciate')) {
-            return `You're welcome! 😊 Good luck with your applications! Remember to check our website regularly for updates on scholarships and university admissions.`;
-        }
-        
-        // Default response
-        return `I understand you're asking about: "${userMessage}"\n\nI specialize in helping Zambian students with:\n\n**🎓 HELSB Bursaries** – Complete application guidance\n**🏫 Zambian Universities** – Programs & requirements\n**🌍 Scholarships Abroad** – China, Turkey, UK, USA, etc.\n**📋 Applications** – Step-by-step process\n**👥 Mentorship** – Connect with our team\n\n💡 **Try asking about:** "HELSB application process", "Medicine programs in Zambia", or "scholarships for 2025"!`;
-    }
 });
-</script>
+</script> 
+
 </body>
 </html>
-
 
 
 
